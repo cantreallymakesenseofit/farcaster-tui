@@ -37,7 +37,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: oven-sh/setup-bun@v2
       - run: bun install --frozen-lockfile
-      - run: bun build src/index.tsx --compile --outfile farcaster-tui-${{ matrix.target }}
+      - run: bun build src/index.tsx --compile --external react-devtools-core --outfile farcaster-tui-${{ matrix.target }}
       - uses: softprops/action-gh-release@v2
         with:
           files: farcaster-tui-${{ matrix.target }}
