@@ -1,0 +1,5 @@
+node_modules/
+dist/
+farcaster-tui
+.env
+*.log
