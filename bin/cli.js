@@ -1,9 +1,7 @@
 #!/usr/bin/env node
-import { execFileSync } from "node:child_process";
-import { fileURLToPath } from "node:url";
-import { dirname, join } from "node:path";
+const { execFileSync } = require("node:child_process");
+const { join } = require("node:path");
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
 const entry = join(__dirname, "..", "src", "index.tsx");
 
 try {
