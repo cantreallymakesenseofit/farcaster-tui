@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
-import { Box, Text, useInput } from "ink"
+import { Box, Text, useInput, useStdout } from "ink"
 import { Spinner } from "@inkjs/ui"
 import { AppContext } from "../app.tsx"
 import { getUserProfile } from "../hub/users.ts"
@@ -19,7 +19,10 @@ export function Profile({ fid }: { fid: number }) {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollOffset, setScrollOffset] = useState(0)
 
-  const VISIBLE_COUNT = 8
+  const { stdout } = useStdout()
+  const rows = stdout?.rows || 24
+  // Header ~3, profile box ~6, footer 1, each cast ~4 lines (compact)
+  const VISIBLE_COUNT = Math.max(2, Math.floor((rows - 10) / 4))
 
   useEffect(() => {
     loadProfile()

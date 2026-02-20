@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
-import { Box, Text, useInput } from "ink"
+import { Box, Text, useInput, useStdout } from "ink"
 import { Spinner } from "@inkjs/ui"
 import { AppContext } from "../app.tsx"
 import { getCastsByFid } from "../hub/casts.ts"
@@ -43,7 +43,10 @@ export function Feed() {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollOffset, setScrollOffset] = useState(0)
 
-  const VISIBLE_COUNT = 10
+  const { stdout } = useStdout()
+  const rows = stdout?.rows || 24
+  // Header ~3 lines, footer 1 line, each cast ~5 lines (borders + header + text)
+  const VISIBLE_COUNT = Math.max(2, Math.floor((rows - 4) / 5))
 
   useEffect(() => {
     fetchFeed()
@@ -54,13 +57,7 @@ export function Feed() {
     setError(null)
     try {
       if (!fid) {
-        // No FID set — show global recent casts from FID 3 (dwr) as sample
-        const response = await getCastsByFid(3, {
-          pageSize: 30,
-          reverse: true,
-        })
-        const enriched = await Promise.all(response.messages.map(enrichCast))
-        setCasts(enriched.filter(Boolean) as EnrichedCast[])
+        setLoading(false)
         return
       }
 

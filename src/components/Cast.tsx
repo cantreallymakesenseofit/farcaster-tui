@@ -7,10 +7,20 @@ interface CastProps {
   cast: EnrichedCast
   selected: boolean
   compact?: boolean
+  maxLines?: number
 }
 
-export function Cast({ cast, selected, compact }: CastProps) {
+function truncateText(text: string, maxLines: number): string {
+  const lines = text.split("\n")
+  if (lines.length <= maxLines) return text
+  return lines.slice(0, maxLines).join("\n") + "..."
+}
+
+export function Cast({ cast, selected, compact, maxLines = 3 }: CastProps) {
   const borderColor = selected ? "cyan" : "gray"
+  const displayText = compact
+    ? truncateText(cast.text, 2)
+    : truncateText(cast.text, maxLines)
 
   return (
     <Box
@@ -29,19 +39,15 @@ export function Cast({ cast, selected, compact }: CastProps) {
         <Text dimColor>{formatRelativeTime(cast.timestamp)}</Text>
         {cast.parentCastId && <Text dimColor>[reply]</Text>}
       </Box>
-      <Text wrap="wrap">{cast.text}</Text>
+      <Text wrap="truncate-end">{displayText}</Text>
       {!compact && cast.embeds.length > 0 && (
-        <Box flexDirection="column">
-          {cast.embeds.map((embed, i) => (
-            <Text key={i} dimColor>
-              {embed.url
-                ? `[link] ${embed.url}`
-                : embed.castId
-                  ? `[quote] ${embed.castId.hash.slice(0, 10)}...`
-                  : ""}
-            </Text>
-          ))}
-        </Box>
+        <Text dimColor>
+          {cast.embeds
+            .slice(0, 2)
+            .map((e) => (e.url ? `[link] ${e.url}` : ""))
+            .filter(Boolean)
+            .join(" ")}
+        </Text>
       )}
     </Box>
   )

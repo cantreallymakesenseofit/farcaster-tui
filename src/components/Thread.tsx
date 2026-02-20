@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
-import { Box, Text, useInput } from "ink"
+import { Box, Text, useInput, useStdout } from "ink"
 import { Spinner } from "@inkjs/ui"
 import { AppContext } from "../app.tsx"
 import { getCastById, getCastsByParent } from "../hub/casts.ts"
@@ -49,7 +49,10 @@ export function Thread({
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollOffset, setScrollOffset] = useState(0)
 
-  const VISIBLE_COUNT = 8
+  const { stdout } = useStdout()
+  const rows = stdout?.rows || 24
+  // Header ~3, root cast ~6, reply count 1, footer 1, each reply ~5 lines
+  const VISIBLE_COUNT = Math.max(2, Math.floor((rows - 11) / 5))
 
   useEffect(() => {
     loadThread()

@@ -106,6 +106,39 @@ The default hub is `https://hub.merv.fun`. You can change it in settings or by e
 - `https://hub.pinata.cloud`
 - `https://nemes.farcaster.xyz:2281`
 
+## Development
+
+```bash
+git clone https://github.com/backmeupplz/farcaster-tui.git
+cd farcaster-tui
+bun install
+```
+
+Run in dev mode with hot reload (restarts on any file change):
+
+```bash
+bun dev
+```
+
+Run once without watch:
+
+```bash
+bun start
+```
+
+Type check:
+
+```bash
+bun run typecheck
+```
+
+Build a standalone binary:
+
+```bash
+bun run build
+./farcaster-tui
+```
+
 ## Tech Stack
 
 - [Bun](https://bun.sh) — runtime

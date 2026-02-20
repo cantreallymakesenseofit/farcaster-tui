@@ -8,7 +8,9 @@
   },
   "scripts": {
     "start": "bun src/index.tsx",
-    "build": "bun build src/index.tsx --compile --outfile farcaster-tui"
+    "dev": "bun --watch src/index.tsx",
+    "build": "bun build src/index.tsx --compile --outfile farcaster-tui",
+    "typecheck": "bunx tsc --noEmit"
   },
   "dependencies": {
     "@farcaster/hub-nodejs": "^0.15.9",

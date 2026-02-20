@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react"
-import { Box, Text, useInput } from "ink"
+import { Box, Text, useInput, useStdout } from "ink"
 import { Spinner } from "@inkjs/ui"
 import { AppContext } from "../app.tsx"
 import { getCastsByMention } from "../hub/casts.ts"
@@ -42,7 +42,10 @@ export function Notifications() {
   const [selectedIndex, setSelectedIndex] = useState(0)
   const [scrollOffset, setScrollOffset] = useState(0)
 
-  const VISIBLE_COUNT = 10
+  const { stdout } = useStdout()
+  const rows = stdout?.rows || 24
+  // Header ~3, "Mentions" 1, footer 1, each cast ~5 lines
+  const VISIBLE_COUNT = Math.max(2, Math.floor((rows - 5) / 5))
 
   useEffect(() => {
     loadNotifications()
