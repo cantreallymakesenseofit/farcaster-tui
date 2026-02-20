@@ -1,10 +1,10 @@
 {
   "name": "farcaster-tui",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "A terminal-based Farcaster client",
   "type": "module",
   "bin": {
-    "farcaster-tui": "./src/index.tsx"
+    "farcaster-tui": "./bin/farcaster-tui"
   },
   "scripts": {
     "start": "bun src/index.tsx",
