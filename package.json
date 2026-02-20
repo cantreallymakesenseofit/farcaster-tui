@@ -1,6 +1,6 @@
 {
   "name": "farcaster-tui",
-  "version": "0.1.3",
+  "version": "0.2.0",
   "description": "A terminal-based Farcaster client",
   "type": "module",
   "bin": {
